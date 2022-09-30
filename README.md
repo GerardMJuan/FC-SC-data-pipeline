@@ -1,18 +1,38 @@
 # FC-SC-data-pipeline
-Code that applies a data pipeline to extract Functional and Structural connectivity matrices from MRI data. The repository is meant to go together with XXX, and has been used in paper YYY, and it has been written to be able to extend to new data. 
+Pipeline for TVB processing for the MAGNIMS project "The Virtual Brain to study Multiple Sclerosis".
 
-# Description
+## WARNING
+Code is shared "as is", should not be considered as an automatic pipeline, foolproof or failproof. Some things could break. Run with caution. 
 
-# Features
+## Quick description
+This code applies a full pipeline to generate SC and FC matrices ready for TVB simulation. Each subject must have:
+- T1 scan for segmentation.
+- FLAIR for lesion segmentation.
+- DTI for tracking.
+- rsfMRI for FC generation.
 
-# How to use
+The scripts are adapted for each of the centers used in the original work. For a new site, some parameters and options will probably need to be adapted too.
 
-# How to extend
+## Programs and main packages used
+In no particular order.
+* Python3
+* MATLAB
+* Mrtrix3 (https://www.mrtrix.org/)
+* CONN (https://web.conn-toolbox.org/)
+* LST (https://www.applied-statistics.de/lst.html)
+* FastSurfer (https://github.com/Deep-MI/FastSurfer)
+* FSL (https://fsl.fmrib.ox.ac.uk/fsl/fslwiki)
 
-# Credits
+## Files description
+* run_pipeline_prime.py: Runs the whole pipeline. See the file for options. Different parts of the pipeline can be selected, and also can be run in parallel. 
+* run_CONN.py: Separate pipeline that processes the fMRI using CONN to obtain the FC in the TVB format.
+* average_matrices.py: Average all the matrices of the healthy controls already generated of a single center.
+* check_all_pips.py: Check the state of preprocessing for each subject and preprocesing step.
+* check_qc.py: Generates quality control images for the processed subjects.
+* create_unified_csv.py: Combines . Not directly relevant, although the output format of the csv is the one used by the pipeline.
+* move_completed_subjects.py: Moves completed preprocessed subjects to a different directory.
 
-Eloy Martinez-Heras ( at ) for help with the code and 
-Michael Schirner for C code on WongWang.
-XX
-XX
-XX
+## Credits
+* Michael Schirner, Simon Rothmeier, Petra Ritter for parts of the code adapted from their TVB pipeline (those are cited specifically for each script) https://github.com/BrainModes/TVB-empirical-data-pipeline An automated pipeline for constructing personalized virtual brains from multimodal neuroimaging data. NeuroImage.
+* Eloy Martínez de las Heras for their help for the diffusion processing and their approach to remove implausible streamlines, described in more detail in https://doi.org/10.1371/journal.pone.0137064.
+* Gerard Martí-Juan (gerardmartijuan(at)(ge)mail.com)
