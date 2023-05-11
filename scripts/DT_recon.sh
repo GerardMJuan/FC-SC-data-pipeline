@@ -16,7 +16,7 @@ rootPath=$(pwd)
 export FREESURFER_HOME=/usr/local/freesurfer
 source $FREESURFER_HOME/SetUpFreeSurfer.sh
 
-export ANTSPATH=/home/extop/lib/ANTs/bin
+export ANTSPATH=
 export PATH=${ANTSPATH}:$PATH
 
 FSLDIR=/usr/local/fsl
@@ -24,7 +24,7 @@ FSLDIR=/usr/local/fsl
 PATH=${FSLDIR}/bin:${PATH}
 export FSLDIR PATH
 
-MRTrixDIR=/home/extop/lib/mrtrix3/bin
+MRTrixDIR=
 export PATH=${MRTrixDIR}:${PATH}
 
 export PATH=/usr/local/cuda-10.2/bin:$PATH
@@ -36,8 +36,6 @@ export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
 
 # subject path
 
-# STEP 0: INPUT VOLUMES
-# manual, s'ha de canviar
 subID=$1 
 subj_path=$2
 dwi=$3
@@ -51,20 +49,11 @@ fm_magnitude=${10}
 json=${11}
 bval2=${12}
 bvec2=${13}
-#subj_path=/mnt/DADES/Gerard/DATA/DT_testing/FIS_028_prime
-#subID="FIS_028" 
-#dwi=${subj_path}/r${subID}_DWI_00.nii.gz  
-##bval=${subj_path}/r${subID}_DWI_00.bval 
-#bvec=${subj_path}/r${subID}_DWI_00.bvec
-#lesions_roi=${subj_path}/r${subID}_ROI_00.nii.gz
-#fm_phase=${subj_path}/r${subID}_GFM_ph_00.nii.gz
-#fm_magnitude=${subj_path}/r${subID}_GFM_mag_00.nii.gz
 
 #SIEMENS DEFAULT
 # these are parameters that depend on the scanner
 # BOTH IN MS
 # probably should be input
-# we donot use them right now!
 # TE=103 # DTI TE
 # DT=0.485 # dwell time 
 

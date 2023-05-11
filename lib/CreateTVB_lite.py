@@ -103,8 +103,8 @@ def CreateTVB(subjID, subj_dir, out_dir):
 
     
 if __name__ == "__main__":
-    subjID = "FIS_028"
-    subj_dir = "/home/extop/GERARD/DATA/DT_testing/FIS_028_prime"
-    out_dir = "/home/extop/GERARD/DATA/DT_testing/FIS_028_prime/results"
+    subjID = 
+    subj_dir = 
+    out_dir = 
 
     CreateTVB(subjID, subj_dir, out_dir)

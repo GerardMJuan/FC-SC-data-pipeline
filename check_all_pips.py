@@ -3,10 +3,6 @@ Script that jointly checks for all the datasets that we have.
 
 This builds over all the datasets and creates a csv with the progress
 of the preprocessing for all of them.
-
-The script is inspired in the check_pipeline function.
-
-Ideally, input to this script should be the unified csv. So do that first
 """
 
 import pandas as pd
@@ -14,7 +10,7 @@ import numpy as np
 import datetime
 import os
 
-out_dir = "/home/extop/GERARD/DATA/MAGNIMS2021"
+out_dir = "
 total_csv = f"{out_dir}/data_total.csv"
 
 df_total = pd.read_csv(total_csv)
@@ -30,9 +26,6 @@ for row in df_total.itertuples():
     subID = row.SubjID
 
     centre_list.append(row.CENTER)
-
-    # if row.CENTER == "MILAN":
-    #     subID = subID + "_" + datetime.datetime.strptime(row.MR_DATE, "%d/%m/%Y").strftime("%Y%m%d")
 
     subj_list.append(subID)
 

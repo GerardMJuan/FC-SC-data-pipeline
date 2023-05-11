@@ -7,18 +7,18 @@
 # =============================================================================
 
 # configuration
-export FREESURFER_HOME=/usr/local/freesurfer
+export FREESURFER_HOME=
 source $FREESURFER_HOME/SetUpFreeSurfer.sh
 
-export ANTSPATH=/home/extop/lib/ANTs/bin
+export ANTSPATH=
 export PATH=${ANTSPATH}:$PATH
 
-FSLDIR=/usr/local/fsl
+FSLDIR=
 . ${FSLDIR}/etc/fslconf/fsl.sh
 PATH=${FSLDIR}/bin:${PATH}
 export FSLDIR PATH
 
-MRTrixDIR=/home/extop/lib/mrtrix3/bin
+MRTrixDIR=
 export PATH=${MRTrixDIR}:${PATH}
 
 # inputs

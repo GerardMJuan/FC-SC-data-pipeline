@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # =============================================================================
-# Author: Gerard Martí
 # Description: Run LST toolbox from MATLAB rto 
 # adapted from TVB-pipeline by Schirner et al
 # =============================================================================
@@ -9,12 +8,10 @@
 # load MATLAB
 # and SPM12
 
-spm_folder='/home/extop/lib/spm12'
+spm_folder=
+matlab_path=
+export PATH=$matlab_path:$PATH
 
-export PATH=/home/extop/lib/MATLAB/R2021b/bin/:$PATH
-
-# t1_path='/mnt/DADES/Gerard/DATA/LST_TESTING/CLINIC/rFIS_063_T1_00.nii'
-# flair_path='/mnt/DADES/Gerard/DATA/LST_TESTING/CLINIC/rFIS_063_FLAIR_00.nii'
 
 subjID=$1
 t1_path=$2
@@ -28,11 +25,9 @@ mkdir -p $out_dir/lst/
 
 cp $t1_path $out_dir/lst/T1.nii.gz
 cp $flair_path $out_dir/lst/FLAIR.nii.gz
-# cp $lesion_path $out_dir/lst/lesion.nii.gz
 
 t1_path=$out_dir/lst/T1.nii.gz
 flair_path=$out_dir/lst/FLAIR.nii.gz
-# lesion_path=$out_dir/lst/lesion.nii.gz
 
 # ONLY AMSTERDAM
 # TO WORK WITH T1
@@ -50,13 +45,6 @@ lesion_path=$out_dir/lst/ples_lga_0.3_rmFLAIR.nii.nii # double NII i dont know w
 flair_path=$out_dir/lst/rmFLAIR.nii
 cp $lesion_path $out_dir/lst/${subjID}_ROI.nii
 gzip $out_dir/lst/${subjID}_ROI.nii
-# register FLAIR to T1 and apply to lesions ROI
-# with the output name being
-# flirt -in $flair_path -ref $t1_path -omat $out_dir/lst/FLAIR2T1.mat -out $out_dir/lst/FLAIR2T1.nii
-
-# TODO. CURRENTLY, LESION PATH IS NOT DEFINED. NEEDS TO BE FOUND BY GETTING THE OUTPUT OF THE MATLAB FUNCTION
-# flirt -in $lesion_path -ref $t1_path -init $out_dir/lst/FLAIR2T1.mat -applyxfm -out $out_lesion 
 
 # copy to the original directory
-# HARDCODED
-cp $out_lesion /mnt/nascarm01/data/Projectes/MAGNIMS2021/${type_dir}/${subjID}/${subjID}_ROI.nii.gz
+cp $out_lesion ${type_dir}/${subjID}/${subjID}_ROI.nii.gz

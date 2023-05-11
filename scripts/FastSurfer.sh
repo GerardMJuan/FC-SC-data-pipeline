@@ -17,7 +17,7 @@ rootPath=$(pwd)
 export FREESURFER_HOME=/usr/local/freesurfer
 source $FREESURFER_HOME/SetUpFreeSurfer.sh
 
-FastSurferDir=/home/extop/lib/FastSurfer
+FastSurferDir=
 export FASTSURFER_HOME=${FastSurferDir}
 
 FSLDIR=/usr/local/fsl
@@ -25,7 +25,7 @@ FSLDIR=/usr/local/fsl
 PATH=${FSLDIR}/bin:${PATH}
 export FSLDIR PATH
 
-MRTrixDIR=/home/extop/lib/mrtrix3/bin
+MRTrixDIR=
 export PATH=${MRTrixDIR}:${PATH}
 
 #############################################################

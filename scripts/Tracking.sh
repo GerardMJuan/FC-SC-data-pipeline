@@ -1,18 +1,19 @@
 #!/bin/bash
 
 # =============================================================================
-# Author: Gerard Martí
+# Author: Gerard Martí, Eloy Martínez de las Heras
 # Description: Implements pipeline to extract SC weights and length tracts from 
 # generated tractography, using a segmentation based on freesurfer
 # NOTE: it is required to change the labels of the segmentation beforehand, using
 # script change_segmentation.py
+# Based on https://doi.org/10.1371/journal.pone.0137064
 # =============================================================================
 
 # configuration
-export FREESURFER_HOME=/usr/local/freesurfer
+export FREESURFER_HOME=
 source $FREESURFER_HOME/SetUpFreeSurfer.sh
 
-export ANTSPATH=/home/extop/lib/ANTs/bin
+export ANTSPATH=
 export PATH=${ANTSPATH}:$PATH
 
 FSLDIR=/usr/local/fsl
@@ -20,7 +21,7 @@ FSLDIR=/usr/local/fsl
 PATH=${FSLDIR}/bin:${PATH}
 export FSLDIR PATH
 
-MRTrixDIR=/home/extop/lib/mrtrix3/bin
+MRTrixDIR=
 export PATH=${MRTrixDIR}:${PATH}
 export MRTRIX_QUIET=Y
 
@@ -28,7 +29,6 @@ export MRTRIX_QUIET=Y
 subID=$1
 subj_path=$2
 
-#subj_path=/mnt/DADES/Gerard/DATA/DT_testing/FIS_028_prime
 out_dir=${subj_path}/dt_proc # should already be created
 FS=${subj_path}/recon_all
 
@@ -45,17 +45,10 @@ rm -rf ${out_dir}/tck
 mkdir -p ${out_dir}/nodes
 mkdir -p ${out_dir}/tck
 
-### CREATE CONNECTOME
-# THIS SHOULD BE A SEPARATE SCRIPT AND SEPARATE OUT_DIR
-# BC IT DEPENDS ON THE SEGMENTATION
-# AND FIRST STEP SHOULD BE TO RUN python Change_segmentation.py
-# Find size threshold
 size="$(fslval ${subj_path}/dt_recon/fa.nii.gz pixdim3)"
 size_thr=`echo $size + 0.5 | bc`
 
 # needs to be updated with the values of the mindboggle UI
-# but this is just the FS no?
-# vull dir al final, podriem fer servir igualment FastSurfer
 # THIS NEEDS TO BE RUN BEFORE CALLING THIS SCRIPT, IN PYTHON
 fslchfiletype NIFTI_GZ ${FS}/mri/aparc.DKTatlas+aseg_newSeg.nii.gz
 
@@ -76,16 +69,11 @@ for i in {1..76};do
 done
 
 # Generate a connectome matrix from a streamlines file and a node parcellation image
-# this should be repeated with values for track lengths??
 tck2connectome ${out_dir}/brain_track.tck ${out_dir}/nodes2diff.nii.gz ${out_dir}/connectome.csv \
 -out_assignments ${out_dir}/assignments.csv -assignment_radial_search $size_thr -force -nthreads 6
 
-echo "test arriba aqui"
-
 # Create a file for each connection between rois
 connectome2tck ${out_dir}/brain_track.tck ${out_dir}/assignments.csv ${out_dir}/tck/${subID}-- -exclusive -force -nthreads 6
-
-echo "test arriba aqui 3"
 
 rm -f ${out_dir}/assignments.csv
 rm -f ${out_dir}/connectome.csv
@@ -211,7 +199,6 @@ for filename in *_corr.tck;do
     rm ${tck_file}.tck
 done
 
-# transpose from where?
 python -c "import sys; print('\n'.join(' '.join(c) for c in zip(*(l.split() for l in sys.stdin.readlines() if l.strip()))))" < ${out_dir}/list_tmp.txt > ${out_dir}/list.txt
 read list <${out_dir}/list.txt
 
@@ -225,8 +212,6 @@ ${out_dir}/brain_track.txt -force -nthreads 6
 
 cd $subj_path
 
-# AL FINAL TREIEM UNS WEIGHTS: DPRES PODEM FER UN TCK2CONNECTOME? amb brain_track_AEC i ferho dos cops, 
-# un per lengths i l'altre per connections?
 tck2connectome -symmetric -zero_diagonal ${out_dir}/brain_track_AEC.tck \
 ${out_dir}/nodes2diff.nii.gz ${out_dir}/connectome_weights.csv -tck_weights_in ${out_dir}/brain_track.txt \
 -assignment_radial_search $size_thr -force -nthreads 6
